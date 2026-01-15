@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Disaster Relief Coordination Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <!-- Google Maps -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADkixczQ7xgEOuUJQ3YlnwDiLzGN8IoyU"></script>
+</head>
+
+<body>
+
+<h1 style="text-align:center; font-family:montserrat;font-size:50px">
+  ‍🚒 RescueNet🧑
+</h1>
+<div class="tagline">
+  <span>● Secure</span>
+  <span>● Support</span>
+  <span>● Save</span>
+</div>
+
+<!-- User View -->
+<div id="mainView">
+  <div class="section">
+    <h2>🚨 Send SOS</h2>
+    <input id="name" placeholder="Name">
+    <input id="need" placeholder="Help needed">
+    <div id="aiPreview" style="margin-top:5px; color:yellow;"></div>
+    <button onclick="sendSOS()">Send SOS</button>
+  </div>
+
+  <div class="section">
+    <h2>🧑‍🚒 Rescue Login</h2>
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboardView" style="display:none">
+  <div class="section">
+    <h2>🧑‍🚒 Live SOS Dashboard</h2>
+    <div id="alerts"></div>
+  </div>
+
+  <div class="section">
+    <h2>🗺️ SOS Locations Map</h2>
+    <div id="map"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
