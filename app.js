@@ -28,15 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const isDashboard = params.get("dashboard") === "true";
 
-  if (isDashboard) {
-    mainView.style.display = "none";
-    dashboardView.style.display = "block";
-  }
-
   // Google Map
   let map, markers = [], bounds;
 
-  window.initMap = function() { // must be global for callback
+  window.initMap = function() { // global for callback
     map = new google.maps.Map(document.getElementById("map"), {
       center:{ lat:19.0760, lng:72.8777 },
       zoom:5
@@ -143,23 +138,16 @@ Reply ONLY one word: High, Medium, Low
     });
   }
 
-  // Login
-  window.login = function(){
-    auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value)
-      .then(()=>window.location.href=location.pathname+"?dashboard=true")
-      .catch(err=>alert(err.message));
-  }
-
-  // Dashboard
-  if(isDashboard){
-    window.initMap(); // ensure map shows
+  // ================== DASHBOARD INIT FUNCTION ==================
+  function initDashboard() {
+    window.initMap(); // show map
     db.collection("sos").orderBy("time","desc")
       .onSnapshot(snapshot=>{
         alerts.innerHTML="";
         clearMarkers();
         snapshot.forEach(doc=>{
-          const d=doc.data();
-          alerts.innerHTML+=`
+          const d = doc.data();
+          alerts.innerHTML += `
             <div class="alert">
               <span><b>${d.name}</b> : ${d.need}
                 <span class="priority">${d.priority}</span>
@@ -173,10 +161,29 @@ Reply ONLY one word: High, Medium, Low
       });
   }
 
+  // Login
+  window.login = function(){
+    auth.signInWithEmailAndPassword(emailInput.value,passwordInput.value)
+      .then(()=>{
+        mainView.style.display = "none";
+        dashboardView.style.display = "block";
+        initDashboard(); // load dashboard immediately after login
+      })
+      .catch(err=>alert(err.message));
+  }
+
+  // Auto load dashboard if URL has ?dashboard=true
+  if(isDashboard){
+    mainView.style.display = "none";
+    dashboardView.style.display = "block";
+    initDashboard();
+  }
+
   window.deleteSOS = function(id){
     if(confirm("Mark rescue as completed?"))
       db.collection("sos").doc(id).delete();
   }
 
 });
+
 
