@@ -11,7 +11,7 @@ app.use(cors());
 
 // ================== SERVICE ACCOUNT AUTH ==================
 const auth = new GoogleAuth({
-  keyFile: "./service-account.json", // downloaded JSON file from Google Cloud
+  credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON),
   scopes: ["https://www.googleapis.com/auth/cloud-platform"]
 });
 
@@ -51,5 +51,6 @@ app.post("/ask-gemini", async (req, res) => {
 app.listen(3000, () =>
   console.log("✅ AI Server running at http://localhost:3000")
 ); 
+
 
 
