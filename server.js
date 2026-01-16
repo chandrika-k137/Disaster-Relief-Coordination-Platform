@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const GEMINI_API_KEY = "AIzaSyA64OY6ynOZEw75yotNtHlt8IILK6J9OgU";
+const GEMINI_API_KEY = "AIzaSyCeqdF1-O2F4rcPKurnNZXrfdwjvP230TQ";
 
 app.post("/ask-gemini", async (req,res)=>{
   const {question} = req.body;
@@ -31,4 +31,5 @@ app.post("/ask-gemini", async (req,res)=>{
 });
 
 app.listen(3000,()=>console.log("✅ AI Server running at http://localhost:3000"));
+
 
